@@ -1,0 +1,40 @@
+.table {
+  margin-top: 20px;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 350px;
+  color: gray;
+}
+
+.table table {
+  width: 100%;
+}
+
+tr {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table td {
+  padding: 0.5rem;
+}
+
+.table tr:nth-child(odd) {
+  background-color: #f3f2f8;
+}
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 4px;
+  border: 1px solid #d5d5d5;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: #eeeeee;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #b0b0b0;
+}

@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'react';
 
 import './App.css';
-import { FormControl, MenuItem, Select } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  FormControl,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import InfoBox from './components/InfoBox';
+import Table from './components/Table';
+import LineGraph from './components/LineGraph';
+import Map from './components/Map';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
 
-  console.log(countryInfo);
-
-  const getCountriesName = async () => {
+  const getCountries = async () => {
     const response = await fetch(`https://disease.sh/v3/covid-19/countries`);
     const data = await response.json();
-    const countries = data.map((country) => {
-      return { name: country.country, value: country.countryInfo.iso2 };
-    });
-    setCountries(countries);
+
+    setCountries(data);
   };
 
   useEffect(() => {
-    getCountriesName();
+    getCountries();
   }, []);
 
   const getCountyInfo = async (url) => {
@@ -55,8 +61,11 @@ function App() {
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {countries &&
                 countries.map((country) => (
-                  <MenuItem key={country.name} value={country.value}>
-                    {country.name}
+                  <MenuItem
+                    key={country.country}
+                    value={country.countryInfo.iso2}
+                  >
+                    {country.country}
                   </MenuItem>
                 ))}
             </Select>
@@ -82,11 +91,19 @@ function App() {
             total={countryInfo.deaths}
           />
         </div>
+
+        <Map />
       </div>
 
-      <div className="app-right">
-        <h2>this is app right sides</h2>
-      </div>
+      {/* right side */}
+      <Card className="app-right">
+        <CardContent>
+          <h3>Live Cases By Country</h3>
+          <Table countries={countries} />
+          <h3>Worldwide New Cases</h3>
+          <LineGraph />
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -13,10 +13,11 @@ body {
 }
 
 .app-left {
-  flex: 0.8;
+  flex: 0.7;
+  margin-right: 20px;
 }
 .app-right {
-  flex: 0.2;
+  flex: 0.3;
 }
 
 .app-header {
