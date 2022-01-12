@@ -11,13 +11,15 @@ import {
 import InfoBox from './components/InfoBox';
 import Table from './components/Table';
 import LineGraph from './components/LineGraph';
-import Map from './components/Map';
+import Map from './components/Map/Map';
 import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
+  const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
+  const [mapZoom, setMapZoom] = useState(12);
 
   const getCountries = async () => {
     const response = await fetch(`https://disease.sh/v3/covid-19/countries`);
@@ -34,6 +36,11 @@ function App() {
     const response = await fetch(url);
     const data = await response.json();
     setCountryInfo(data);
+
+    if (data.countryInfo) {
+      setMapCenter({ lat: data.countryInfo.lat, lng: data.countryInfo.long });
+    }
+    setMapZoom(5);
   };
 
   useEffect(() => {
@@ -92,7 +99,7 @@ function App() {
           />
         </div>
 
-        <Map />
+        <Map countries={countries} center={mapCenter} zoom={mapZoom} />
       </div>
 
       {/* right side */}
