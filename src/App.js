@@ -3,8 +3,8 @@ import React from 'react';
 import './App.css';
 import { Card, CardContent } from '@mui/material';
 
-import Table from './components/Table';
-import LineGraph from './components/LineGraph';
+import Table from './components/Table/Table';
+import LineGraph from './components/Graph/LineGraph';
 import Map from './components/Map/Map';
 import 'leaflet/dist/leaflet.css';
 import Header from './components/Header';
