@@ -15,7 +15,7 @@ const casesTypeColors = {
   },
   deaths: {
     hex: '#fb4443',
-    multiplier: 1800,
+    multiplier: 200,
   },
 };
 
@@ -31,8 +31,10 @@ const Circle = ({ countries, casesType }) => {
             key={i}
             center={[country.countryInfo.lat, country.countryInfo.long]}
             fillOpacity={0.4}
-            color={casesTypeColors[casesType].hex}
-            fillColor={casesTypeColors[casesType].hex}
+            pathOptions={{
+              color: casesTypeColors[casesType].hex,
+              fillColor: casesTypeColors[casesType].hex,
+            }}
             radius={Math.floor((radius + 1) * 10)}
           >
             <Popup>

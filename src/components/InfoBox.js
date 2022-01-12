@@ -1,9 +1,11 @@
-import { Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
+import { Card, CardContent, Typography } from '@mui/material';
 
-const InfoBox = ({ title, cases, total }) => {
+import './InfoBox.css';
+
+const InfoBox = ({ title, cases, total, onClick, active }) => {
   return (
-    <Card className="box-info">
+    <Card className={`box-info ${active && 'active'}`} onClick={onClick}>
       <CardContent>
         <Typography className="title">{title}</Typography>
 

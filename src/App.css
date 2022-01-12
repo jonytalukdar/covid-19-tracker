@@ -37,4 +37,7 @@ body {
   .app {
     flex-direction: column;
   }
+  .app-stats {
+    flex-direction: column;
+  }
 }

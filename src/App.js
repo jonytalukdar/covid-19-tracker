@@ -13,6 +13,7 @@ import Table from './components/Table';
 import LineGraph from './components/LineGraph';
 import Map from './components/Map/Map';
 import 'leaflet/dist/leaflet.css';
+import { prettyPrintStat } from './util/util';
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -20,6 +21,7 @@ function App() {
   const [countryInfo, setCountryInfo] = useState({});
   const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
   const [mapZoom, setMapZoom] = useState(12);
+  const [casesType, setCasesType] = useState('cases');
 
   const getCountries = async () => {
     const response = await fetch(`https://disease.sh/v3/covid-19/countries`);
@@ -83,19 +85,26 @@ function App() {
         <div className="app-stats">
           <InfoBox
             title="Corona Virus Cases"
-            cases={countryInfo.todayCases}
-            total={countryInfo.cases}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            total={prettyPrintStat(countryInfo.cases)}
+            onClick={(e) => setCasesType('cases')}
+            active={casesType === 'cases'}
           />
 
           <InfoBox
             title="Recovered"
-            cases={countryInfo.todayRecovered}
-            total={countryInfo.recovered}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            total={prettyPrintStat(countryInfo.recovered)}
+            onClick={(e) => setCasesType('recovered')}
+            active={casesType === 'recovered'}
           />
+
           <InfoBox
             title="Deaths"
-            cases={countryInfo.todayDeaths}
-            total={countryInfo.deaths}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            total={prettyPrintStat(countryInfo.deaths)}
+            onClick={(e) => setCasesType('deaths')}
+            active={casesType === 'deaths'}
           />
         </div>
 
@@ -103,7 +112,7 @@ function App() {
           countries={countries}
           center={mapCenter}
           zoom={mapZoom}
-          casesType={'cases'}
+          casesType={casesType}
         />
       </div>
 
@@ -113,7 +122,7 @@ function App() {
           <h3>Live Cases By Country</h3>
           <Table countries={countries} />
           <h3>Worldwide New Cases</h3>
-          <LineGraph />
+          <LineGraph casesType={casesType} />
         </CardContent>
       </Card>
     </div>
