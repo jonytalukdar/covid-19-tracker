@@ -3,6 +3,7 @@ import numeral from 'numeral';
 import { CircleMarker, Popup } from 'react-leaflet';
 
 import './Circle.css';
+import { useGlobalContext } from '../../context/conext';
 
 const casesTypeColors = {
   cases: {
@@ -19,7 +20,8 @@ const casesTypeColors = {
   },
 };
 
-const Circle = ({ countries, casesType }) => {
+const Circle = () => {
+  const { countries, casesType } = useGlobalContext();
   return (
     <div>
       {countries.map((country, i) => {

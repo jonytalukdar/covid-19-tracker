@@ -6,15 +6,17 @@ import './Map.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 import Circle from './Circle';
+import { useGlobalContext } from '../../context/conext';
 
-function Map({ countries, casesType, center, zoom }) {
+function Map() {
+  const { countries, casesType, mapCenter, mapZoom } = useGlobalContext();
   const [map, setMap] = useState(null);
 
   const displayMap = useMemo(
     () => (
       <MapContainer
-        center={[center.lat, center.lng]}
-        zoom={zoom}
+        center={[mapCenter.lat, mapCenter.lng]}
+        zoom={mapZoom}
         scrollWheelZoom={false}
         whenCreated={setMap}
       >
@@ -23,15 +25,17 @@ function Map({ countries, casesType, center, zoom }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <Circle countries={countries} casesType={casesType} />
+        <Circle />
       </MapContainer>
     ),
-    [center, zoom, countries, casesType]
+    [mapCenter, mapZoom]
   );
 
   return (
     <div className="map">
-      {map ? <DisplayPosition center={center} zoom={zoom} map={map} /> : null}
+      {map ? (
+        <DisplayPosition center={mapCenter} zoom={mapZoom} map={map} />
+      ) : null}
       {displayMap}
     </div>
   );
