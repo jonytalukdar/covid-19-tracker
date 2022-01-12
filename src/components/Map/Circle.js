@@ -1,23 +1,25 @@
 import React from 'react';
-
+import numeral from 'numeral';
 import { CircleMarker, Popup } from 'react-leaflet';
+
+import './Circle.css';
 
 const casesTypeColors = {
   cases: {
     hex: '#CC1034',
-    multiplier: 800,
+    multiplier: 600,
   },
   recovered: {
     hex: '#7dd71d',
-    multiplier: 1200,
+    multiplier: 1000,
   },
   deaths: {
     hex: '#fb4443',
-    multiplier: 2000,
+    multiplier: 1800,
   },
 };
 
-const Circle = ({ countries, casesType = 'recovered' }) => {
+const Circle = ({ countries, casesType }) => {
   return (
     <div>
       {countries.map((country, i) => {
@@ -34,7 +36,24 @@ const Circle = ({ countries, casesType = 'recovered' }) => {
             radius={Math.floor((radius + 1) * 10)}
           >
             <Popup>
-              <h1>I am a popup</h1>
+              <div className="info-container">
+                <div
+                  className="info-flag"
+                  style={{
+                    backgroundImage: `url(${country.countryInfo.flag})`,
+                  }}
+                ></div>
+                <div className="info-name">{country.country}</div>
+                <div className="info-confirmed">
+                  Cases: {numeral(country.cases).format('0,0')}
+                </div>
+                <div className="info-recovered">
+                  Recovered: {numeral(country.recovered).format('0,0')}
+                </div>
+                <div className="info-deaths">
+                  Deaths: {numeral(country.deaths).format('0,0')}
+                </div>
+              </div>
             </Popup>
           </CircleMarker>
         );

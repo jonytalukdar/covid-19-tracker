@@ -99,7 +99,12 @@ function App() {
           />
         </div>
 
-        <Map countries={countries} center={mapCenter} zoom={mapZoom} />
+        <Map
+          countries={countries}
+          center={mapCenter}
+          zoom={mapZoom}
+          casesType={'cases'}
+        />
       </div>
 
       {/* right side */}
